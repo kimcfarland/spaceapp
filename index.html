@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEGIS Space Insurance Estimator | Premium Edition v4.0</title>
+    <title>AEGIS Space Insurance Estimator | Premium Quantitative Edition v5.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -31,33 +31,14 @@
         ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #52525b; }
         
-        /* Custom Radio/Checkbox Card Styling */
-        .param-radio:checked + div {
-            border-color: #38bdf8;
-            background-color: rgba(56, 189, 248, 0.05);
-        }
-        .param-radio:checked + div .radio-indicator {
-            background-color: #38bdf8;
-            border-color: #38bdf8;
-            box-shadow: inset 0 0 0 2px #18181b;
-        }
-        .param-checkbox:checked + div {
-            border-color: #4ade80;
-            background-color: rgba(74, 222, 128, 0.05);
-        }
-        .param-checkbox:checked + div .check-indicator {
-            background-color: #4ade80;
-            border-color: #4ade80;
-        }
-        .selected-card {
-            border-color: #38bdf8 !important;
-            box-shadow: 0 0 0 1px #38bdf8;
-            background-color: rgba(56, 189, 248, 0.05) !important;
-        }
+        .param-radio:checked + div { border-color: #38bdf8; background-color: rgba(56, 189, 248, 0.05); }
+        .param-radio:checked + div .radio-indicator { background-color: #38bdf8; border-color: #38bdf8; box-shadow: inset 0 0 0 2px #18181b; }
+        .param-checkbox:checked + div { border-color: #4ade80; background-color: rgba(74, 222, 128, 0.05); }
+        .param-checkbox:checked + div .check-indicator { background-color: #4ade80; border-color: #4ade80; }
+        .selected-card { border-color: #38bdf8 !important; box-shadow: 0 0 0 1px #38bdf8; background-color: rgba(56, 189, 248, 0.05) !important; }
         
-        /* Text Placeholder for Rockets */
         .rocket-placeholder {
-            height: 90px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,6 +48,9 @@
             padding: 0 1rem;
             color: #ffffff;
         }
+        
+        /* Math Trace Styling */
+        .math-trace { font-size: 0.65rem; color: #71717a; border-left: 2px solid #3f3f46; padding-left: 0.5rem; margin-top: 0.25rem; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -74,10 +58,10 @@
     <div class="max-w-[1600px] mx-auto">
         <header class="mb-8 flex items-center justify-between border-b border-[#27272a] pb-6">
             <div>
-                <h1 class="text-3xl font-bold tracking-tight text-white">AEGIS Underwriting Engine</h1>
-                <p class="text-anthropicGray mt-1.5 text-sm md:text-base">Interactive Burn-on-Line Analytics & Policy Structuring</p>
+                <h1 class="text-3xl font-bold tracking-tight text-white">AEGIS Quantitative Underwriting Engine</h1>
+                <p class="text-anthropicGray mt-1.5 text-sm md:text-base">Bayesian Risk Modeling & Algorithmic Policy Structuring</p>
             </div>
-            <div class="text-xs px-3 py-1 bg-premiumBlue/10 border border-premiumBlue/30 text-premiumBlue rounded font-mono hidden md:block">AEGIS_BUILD_v4</div>
+            <div class="text-xs px-3 py-1 bg-premiumBlue/10 border border-premiumBlue/30 text-premiumBlue rounded font-mono hidden md:block">QUANT_BUILD_v5</div>
         </header>
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
@@ -91,150 +75,90 @@
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-xs font-medium text-anthropicGray mb-2 uppercase tracking-wider">Target Orbit</label>
+                        <label class="block text-xs font-medium text-anthropicGray mb-2 uppercase tracking-wider">Target Orbit Risk Modifier</label>
                         <div class="grid grid-cols-2 gap-2">
-                            <label class="cursor-pointer relative">
-                                <input type="radio" name="orbit" value="1.0" class="param-radio hidden" checked>
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3">
-                                    <div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray transition-all"></div>
-                                    <span class="text-sm text-white font-medium">LEO <span class="text-xs text-anthropicGray font-normal block">Base Risk</span></span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer relative">
-                                <input type="radio" name="orbit" value="1.05" class="param-radio hidden">
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3">
-                                    <div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray transition-all"></div>
-                                    <span class="text-sm text-white font-medium">SSO <span class="text-xs text-anthropicGray font-normal block">+5% Premium</span></span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer relative">
-                                <input type="radio" name="orbit" value="1.20" class="param-radio hidden">
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3">
-                                    <div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray transition-all"></div>
-                                    <span class="text-sm text-white font-medium">MEO <span class="text-xs text-anthropicGray font-normal block">+20% Premium</span></span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer relative">
-                                <input type="radio" name="orbit" value="1.30" class="param-radio hidden">
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3">
-                                    <div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray transition-all"></div>
-                                    <span class="text-sm text-white font-medium">GTO/GEO <span class="text-xs text-anthropicGray font-normal block">+30% Premium</span></span>
-                                </div>
-                            </label>
+                            <label class="cursor-pointer relative"><input type="radio" name="orbit" value="1.0" class="param-radio hidden" checked><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray"></div><span class="text-sm text-white font-medium">LEO <span class="text-xs text-anthropicGray block font-normal">Base Risk</span></span></div></label>
+                            <label class="cursor-pointer relative"><input type="radio" name="orbit" value="1.05" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray"></div><span class="text-sm text-white font-medium">SSO <span class="text-xs text-anthropicGray block font-normal">+5% Premium</span></span></div></label>
+                            <label class="cursor-pointer relative"><input type="radio" name="orbit" value="1.20" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray"></div><span class="text-sm text-white font-medium">MEO <span class="text-xs text-anthropicGray block font-normal">+20% Premium</span></span></div></label>
+                            <label class="cursor-pointer relative"><input type="radio" name="orbit" value="1.30" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray"></div><span class="text-sm text-white font-medium">GTO/GEO <span class="text-xs text-anthropicGray block font-normal">+30% Premium</span></span></div></label>
                         </div>
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-xs font-medium text-anthropicGray mb-2 uppercase tracking-wider">Bus Heritage</label>
+                        <label class="block text-xs font-medium text-anthropicGray mb-2 uppercase tracking-wider">Bus Tech Heritage (Weibull λ Shift)</label>
                         <div class="grid grid-cols-1 gap-2">
-                            <label class="cursor-pointer relative">
-                                <input type="radio" name="heritage" value="0.9" class="param-radio hidden">
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center">
-                                    <div class="flex items-center gap-3">
-                                        <div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div>
-                                        <span class="text-sm text-white font-medium">Flight Proven (>5 identical units)</span>
-                                    </div>
-                                    <span class="text-xs text-premiumGreen font-mono bg-premiumGreen/10 px-2 py-0.5 rounded">-10%</span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer relative">
-                                <input type="radio" name="heritage" value="1.0" class="param-radio hidden" checked>
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center">
-                                    <div class="flex items-center gap-3">
-                                        <div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div>
-                                        <span class="text-sm text-white font-medium">Standard Heritage (1-4 units)</span>
-                                    </div>
-                                    <span class="text-xs text-anthropicGray font-mono">BASE</span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer relative">
-                                <input type="radio" name="heritage" value="1.4" class="param-radio hidden">
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center">
-                                    <div class="flex items-center gap-3">
-                                        <div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div>
-                                        <span class="text-sm text-white font-medium">Novel Technology (First Flight)</span>
-                                    </div>
-                                    <span class="text-xs text-red-400 font-mono bg-red-400/10 px-2 py-0.5 rounded">+40%</span>
-                                </div>
-                            </label>
+                            <label class="cursor-pointer relative"><input type="radio" name="heritage" value="0.85" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center"><div class="flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div><span class="text-sm text-white font-medium">Flight Proven (>5 identical units)</span></div><span class="text-xs text-premiumGreen font-mono bg-premiumGreen/10 px-2 py-0.5 rounded">-15%</span></div></label>
+                            <label class="cursor-pointer relative"><input type="radio" name="heritage" value="1.0" class="param-radio hidden" checked><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center"><div class="flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div><span class="text-sm text-white font-medium">Standard Heritage (1-4 units)</span></div><span class="text-xs text-anthropicGray font-mono">BASE</span></div></label>
+                            <label class="cursor-pointer relative"><input type="radio" name="heritage" value="1.4" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center"><div class="flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div><span class="text-sm text-white font-medium">Novel Technology (First Flight)</span></div><span class="text-xs text-red-400 font-mono bg-red-400/10 px-2 py-0.5 rounded">+40%</span></div></label>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-medium text-anthropicGray mb-2 uppercase tracking-wider">Advanced Coverage Options</label>
+                        <label class="block text-xs font-medium text-anthropicGray mb-2 uppercase tracking-wider">Coverage Scope</label>
                         <div class="grid grid-cols-1 gap-2">
-                            <label class="cursor-pointer relative">
-                                <input type="checkbox" id="chk-inorbit" class="param-checkbox hidden" checked>
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3">
-                                    <div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5 flex items-center justify-center"></div>
-                                    <div>
-                                        <span class="text-sm text-white font-medium block">First Year In-Orbit Life</span>
-                                        <span class="text-xs text-anthropicGray block mt-0.5">Covers early on-orbit anomalies (+1.5% flat)</span>
-                                    </div>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer relative">
-                                <input type="checkbox" id="chk-constellation" class="param-checkbox hidden">
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3">
-                                    <div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div>
-                                    <div>
-                                        <span class="text-sm text-white font-medium block">Constellation Block Policy</span>
-                                        <span class="text-xs text-anthropicGray block mt-0.5">Bulk discount for >5 units (-15%)</span>
-                                    </div>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer relative">
-                                <input type="checkbox" id="chk-reused" class="param-checkbox hidden" checked>
-                                <div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3">
-                                    <div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div>
-                                    <div>
-                                        <span class="text-sm text-white font-medium block">Reused Booster Modifier</span>
-                                        <span class="text-xs text-anthropicGray block mt-0.5">Actuarial load for flight-proven stages (+2%)</span>
-                                    </div>
-                                </div>
-                            </label>
+                            <label class="cursor-pointer relative"><input type="checkbox" id="chk-inorbit" class="param-checkbox hidden" checked><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3"><div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div><div><span class="text-sm text-white font-medium block">First Year In-Orbit Life</span><span class="text-xs text-anthropicGray block mt-0.5">Calculated via Weibull Hazard Distribution</span></div></div></label>
+                            <label class="cursor-pointer relative"><input type="checkbox" id="chk-constellation" class="param-checkbox hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3"><div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div><div><span class="text-sm text-white font-medium block">Constellation Block Policy</span><span class="text-xs text-anthropicGray block mt-0.5">Bulk discount for >5 units (-15%)</span></div></div></label>
+                            <label class="cursor-pointer relative"><input type="checkbox" id="chk-reused" class="param-checkbox hidden" checked><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3"><div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div><div><span class="text-sm text-white font-medium block">Reused Booster Hardware</span><span class="text-xs text-anthropicGray block mt-0.5">Bayesian penalty applied to prior (+2%)</span></div></div></label>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="xl:col-span-5 space-y-6">
-                <div class="bg-[#121212] p-5 rounded-lg border border-[#27272a] flex flex-col h-[750px]">
+                
+                <div class="bg-[#121212] p-4 rounded-lg border border-[#27272a] flex justify-between items-center">
+                    <div>
+                        <span class="text-xs text-anthropicGray uppercase tracking-widest font-mono">Active Target</span>
+                        <p id="ui-active-rocket" class="text-white font-bold text-lg">Falcon 9</p>
+                    </div>
+                    <button onclick="fetchIntelligence()" class="bg-premiumBlue/10 hover:bg-premiumBlue/20 text-premiumBlue border border-premiumBlue/30 px-4 py-2 rounded text-sm font-medium transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                        Fetch Market News
+                    </button>
+                </div>
+
+                <div class="bg-[#121212] p-5 rounded-lg border border-[#27272a] flex flex-col h-[650px]">
                     <div class="flex justify-between items-end mb-4 border-b border-[#27272a] pb-2 shrink-0">
                         <h2 class="text-lg font-semibold text-white tracking-tight">Launch Provider Market</h2>
                         <span id="risk-badge" class="text-[10px] uppercase tracking-wider font-mono px-2 py-1 rounded border">--</span>
                     </div>
-                    
-                    <div class="overflow-y-auto pr-2 flex-grow space-y-6" id="lv-container">
-                        </div>
+                    <div class="overflow-y-auto pr-2 flex-grow space-y-6" id="lv-container"></div>
                 </div>
             </div>
 
             <div class="xl:col-span-3">
                 <div class="bg-[#121212] p-5 rounded-lg border border-[#27272a] mb-6">
                     <h2 class="text-sm font-semibold text-white tracking-tight mb-3 border-b border-[#27272a] pb-2">Orbital Transfer Vehicle (OTV)</h2>
-                    <div class="grid grid-cols-2 gap-2" id="otv-container">
-                        </div>
+                    <div class="grid grid-cols-2 gap-2" id="otv-container"></div>
                 </div>
 
                 <div class="bg-[#0a0a0a] p-6 rounded-lg border border-[#3f3f46] shadow-2xl relative overflow-hidden">
                     <div class="absolute -top-20 -right-20 w-64 h-64 bg-premiumBlue/5 rounded-full blur-3xl pointer-events-none"></div>
 
-                    <h2 class="text-xl font-bold mb-6 text-white tracking-tight border-b border-[#27272a] pb-3 uppercase text-sm">Underwriting Summary</h2>
+                    <h2 class="text-xl font-bold mb-6 text-white tracking-tight border-b border-[#27272a] pb-3 uppercase text-sm">Quantitative Summary</h2>
                     
-                    <div class="space-y-4 font-mono text-sm mb-8 relative z-10">
-                        <div class="flex justify-between items-center bg-[#121212] p-2.5 rounded border border-[#27272a]">
-                            <span class="text-anthropicGray">Hardware Rel:</span>
-                            <span id="out-pos" class="text-white font-bold">--%</span>
+                    <div class="space-y-4 font-mono text-sm mb-6 relative z-10">
+                        <div class="bg-[#121212] p-2.5 rounded border border-[#27272a]">
+                            <div class="flex justify-between items-center">
+                                <span class="text-anthropicGray">Hardware Expected Rel:</span>
+                                <span id="out-pos" class="text-white font-bold">--%</span>
+                            </div>
+                            <div class="math-trace">
+                                <div id="trace-bayes">Bayes Prior (α=8, β=2): --</div>
+                                <div id="trace-copula">Copula Dep (θ=2.5): --</div>
+                            </div>
                         </div>
                         
-                        <div class="flex justify-between items-center bg-[#121212] p-2.5 rounded border border-[#27272a]">
-                            <span class="text-anthropicGray">Tech Burn Rate:</span>
-                            <span id="out-tech-rate" class="text-yellow-400 font-bold">--%</span>
+                        <div class="bg-[#121212] p-2.5 rounded border border-[#27272a]">
+                            <div class="flex justify-between items-center">
+                                <span class="text-anthropicGray">Tech Burn Rate:</span>
+                                <span id="out-tech-rate" class="text-yellow-400 font-bold">--%</span>
+                            </div>
+                            <div class="math-trace" id="trace-weibull">Weibull Hazard (k=0.6): --</div>
                         </div>
 
-                        <div class="flex justify-between items-center bg-[#18181b] p-3 rounded border border-premiumBlue/30 shadow-[0_0_10px_rgba(56,189,248,0.1)]">
-                            <span class="text-anthropicGray">Commercial Rate:</span>
+                        <div class="flex justify-between items-center bg-[#18181b] p-3 rounded border border-premiumBlue/30 shadow-[0_0_10px_rgba(56,189,248,0.1)] mt-4">
+                            <span class="text-anthropicGray">Final Commercial Rate:</span>
                             <span id="out-final-rate" class="text-xl text-premiumBlue font-bold">--%</span>
                         </div>
                     </div>
@@ -255,85 +179,123 @@
     </div>
 
     <script>
-        // Expanded Database with Flags and sleek UI colors
+        // --- DATABASE WITH FLIGHT HISTORY FOR BAYESIAN MATH ---
+        // S = Successes, N = Total Flights
         const launchTiers = [
             {
-                name: "Tier 1: Proven Heritage",
-                desc: ">98% Actuarial Reliability. High market capacity.",
-                border: "border-premiumGreen/30", bg: "bg-premiumGreen/10", text: "text-premiumGreen", hex: "#14532d",
+                name: "Tier 1: Proven Heritage", desc: ">98% Expected Reliability.", border: "border-premiumGreen/30", bg: "bg-premiumGreen/10", text: "text-premiumGreen", hex: "#14532d",
                 vehicles: [
-                    { id: 'f9', name: 'Falcon 9', flag: '🇺🇸', rel: 0.995 },
-                    { id: 'atlasv', name: 'Atlas V', flag: '🇺🇸', rel: 0.995 },
-                    { id: 'soyuz', name: 'Soyuz-2', flag: '🇷🇺', rel: 0.985 },
-                    { id: 'lm234', name: 'Long March 2/3/4', flag: '🇨🇳', rel: 0.980 },
-                    { id: 'ariane5', name: 'Ariane 5 (Legacy)', flag: '🇪🇺', rel: 0.985 }
+                    { id: 'f9', name: 'Falcon 9', country: 'United States', flag: '🇺🇸', S: 310, N: 313 },
+                    { id: 'atlasv', name: 'Atlas V', country: 'United States', flag: '🇺🇸', S: 99, N: 100 },
+                    { id: 'soyuz', name: 'Soyuz-2', country: 'Russia', flag: '🇷🇺', S: 140, N: 147 },
+                    { id: 'ariane5', name: 'Ariane 5', country: 'Europe', flag: '🇪🇺', S: 112, N: 117 }
                 ]
             },
             {
-                name: "Tier 2: Established",
-                desc: ">95% Reliability. Strong commercial track record.",
-                border: "border-cyan-400/30", bg: "bg-cyan-400/10", text: "text-cyan-400", hex: "#083344",
+                name: "Tier 2: Established", desc: ">95% Expected Reliability.", border: "border-cyan-400/30", bg: "bg-cyan-400/10", text: "text-cyan-400", hex: "#083344",
                 vehicles: [
-                    { id: 'fh', name: 'Falcon Heavy', flag: '🇺🇸', rel: 0.975 },
-                    { id: 'electron', name: 'Electron', flag: '🇺🇸', rel: 0.965 },
-                    { id: 'pslv', name: 'PSLV', flag: '🇮🇳', rel: 0.965 },
-                    { id: 'lm567', name: 'Long March 5/6/7', flag: '🇨🇳', rel: 0.955 },
-                    { id: 'h2a', name: 'H-IIA', flag: '🇯🇵', rel: 0.970 },
-                    { id: 'minotaur', name: 'Minotaur IV', flag: '🇺🇸', rel: 0.960 }
+                    { id: 'fh', name: 'Falcon Heavy', country: 'United States', flag: '🇺🇸', S: 9, N: 9 },
+                    { id: 'electron', name: 'Electron', country: 'United States', flag: '🇺🇸', S: 41, N: 45 },
+                    { id: 'pslv', name: 'PSLV', country: 'India', flag: '🇮🇳', S: 57, N: 60 },
+                    { id: 'lm5', name: 'Long March 5', country: 'China', flag: '🇨🇳', S: 9, N: 10 },
+                    { id: 'h2a', name: 'H-IIA', country: 'Japan', flag: '🇯🇵', S: 47, N: 48 }
                 ]
             },
             {
-                name: "Tier 3: Emerging Operators",
-                desc: "90-95% Reliability. Proven contractors, new variants.",
-                border: "border-yellow-400/30", bg: "bg-yellow-400/10", text: "text-yellow-400", hex: "#422006",
+                name: "Tier 3: Emerging Operators", desc: "90-95% Expected Reliability.", border: "border-yellow-400/30", bg: "bg-yellow-400/10", text: "text-yellow-400", hex: "#422006",
                 vehicles: [
-                    { id: 'ariane6', name: 'Ariane 6', flag: '🇪🇺', rel: 0.940 },
-                    { id: 'vulcan', name: 'Vulcan Centaur', flag: '🇺🇸', rel: 0.935 },
-                    { id: 'h3', name: 'H3 Rocket', flag: '🇯🇵', rel: 0.930 },
-                    { id: 'gslv', name: 'LVM3', flag: '🇮🇳', rel: 0.925 },
-                    { id: 'vegac', name: 'Vega-C', flag: '🇪🇺', rel: 0.910 },
-                    { id: 'kinetica', name: 'Kinetica-1', flag: '🇨🇳', rel: 0.920 },
-                    { id: 'ceres', name: 'Ceres-1', flag: '🇨🇳', rel: 0.910 }
+                    { id: 'ariane6', name: 'Ariane 6', country: 'Europe', flag: '🇪🇺', S: 1, N: 1 },
+                    { id: 'vulcan', name: 'Vulcan Centaur', country: 'United States', flag: '🇺🇸', S: 1, N: 1 },
+                    { id: 'h3', name: 'H3 Rocket', country: 'Japan', flag: '🇯🇵', S: 1, N: 2 },
+                    { id: 'gslv', name: 'LVM3', country: 'India', flag: '🇮🇳', S: 7, N: 7 },
+                    { id: 'vegac', name: 'Vega-C', country: 'Europe', flag: '🇪🇺', S: 1, N: 2 }
                 ]
             },
             {
-                name: "Tier 4: Developmental",
-                desc: "<90% Actuarial Reliability. Severe risk loads apply.",
-                border: "border-red-400/30", bg: "bg-red-400/10", text: "text-red-400", hex: "#450a0a",
+                name: "Tier 4: Developmental", desc: "<90% Expected Reliability.", border: "border-red-400/30", bg: "bg-red-400/10", text: "text-red-400", hex: "#450a0a",
                 vehicles: [
-                    { id: 'starship', name: 'Starship', flag: '🇺🇸', rel: 0.880 },
-                    { id: 'newglenn', name: 'New Glenn', flag: '🇺🇸', rel: 0.880 },
-                    { id: 'alpha', name: 'Firefly Alpha', flag: '🇺🇸', rel: 0.860 },
-                    { id: 'terranr', name: 'Terran R', flag: '🇺🇸', rel: 0.850 },
-                    { id: 'sslv', name: 'SSLV', flag: '🇮🇳', rel: 0.850 },
-                    { id: 'zhuque', name: 'Zhuque-2', flag: '🇨🇳', rel: 0.840 },
-                    { id: 'rfa', name: 'RFA One', flag: '🇩🇪', rel: 0.820 },
-                    { id: 'spectrum', name: 'Spectrum', flag: '🇩🇪', rel: 0.820 },
-                    { id: 'miura', name: 'Miura 5', flag: '🇪🇸', rel: 0.800 },
-                    { id: 'prime', name: 'Prime', flag: '🇬🇧', rel: 0.800 },
-                    { id: 'rs1', name: 'RS1', flag: '🇺🇸', rel: 0.800 }
+                    { id: 'starship', name: 'Starship', country: 'United States', flag: '🇺🇸', S: 1, N: 3 },
+                    { id: 'newglenn', name: 'New Glenn', country: 'United States', flag: '🇺🇸', S: 0, N: 0 },
+                    { id: 'alpha', name: 'Firefly Alpha', country: 'United States', flag: '🇺🇸', S: 3, N: 4 },
+                    { id: 'terranr', name: 'Terran R', country: 'United States', flag: '🇺🇸', S: 0, N: 0 },
+                    { id: 'sslv', name: 'SSLV', country: 'India', flag: '🇮🇳', S: 2, N: 3 }
                 ]
             }
         ];
 
         const orbitalTugs = [
-            { id: 'none', name: 'No OTV', rel: 1.0 },
-            { id: 'photon', name: 'Photon', rel: 0.98 },
-            { id: 'ion', name: 'ION Carrier', rel: 0.97 },
-            { id: 'sherpa', name: 'Sherpa', rel: 0.96 },
-            { id: 'spacevan', name: 'Space Van', rel: 0.92 },
-            { id: 'vigoride', name: 'Vigoride', rel: 0.90 }
+            { id: 'none', name: 'No OTV', S: 100, N: 100 }, // Perfect baseline
+            { id: 'photon', name: 'Photon', S: 5, N: 5 },
+            { id: 'ion', name: 'ION Carrier', S: 8, N: 8 },
+            { id: 'sherpa', name: 'Sherpa', S: 6, N: 7 },
+            { id: 'vigoride', name: 'Vigoride', S: 2, N: 3 }
         ];
 
         let selectedLV = launchTiers[0].vehicles[0]; 
         let selectedTierInfo = launchTiers[0];
         let selectedOTV = orbitalTugs[0];
 
+        // --- ADVANCED ACTUARIAL MATHEMATICS ---
+
+        // 1. Bayesian Updating for Flight Heritage
+        // We assume an industry prior of alpha=8 (successes), beta=2 (failures) -> 80% baseline for a brand new rocket.
+        function calculateBayesianReliability(S, N, isReused) {
+            let priorAlpha = 8;
+            let priorBeta = 2;
+            
+            // If reused booster, we slightly increase the uncertainty (beta) in the prior
+            if(isReused && N > 5) {
+                priorBeta += 0.5;
+            }
+            
+            const expectedRel = (priorAlpha + S) / (priorAlpha + priorBeta + N);
+            return {
+                val: expectedRel,
+                trace: `E[R] = (${priorAlpha}+${S})/(${priorAlpha}+${priorBeta}+${N})`
+            };
+        }
+
+        // 2. Clayton Copula for Joint Sub-system Failures
+        // Assumes LV and OTV failures are not perfectly independent. A rough ride impacts the OTV.
+        function calculateCopulaJointSurvival(u, v) {
+            if (v >= 0.99) return u; // No OTV math needed
+            const theta = 2.5; // Dependency parameter
+            // Formula: (u^-θ + v^-θ - 1)^(-1/θ)
+            const joint = Math.pow(Math.pow(u, -theta) + Math.pow(v, -theta) - 1, -1 / theta);
+            return {
+                val: joint,
+                trace: `C(u,v) = (u^-2.5 + v^-2.5 - 1)^-0.4`
+            };
+        }
+
+        // 3. Weibull Distribution for In-Orbit Mortality (First Year)
+        function calculateWeibullHazard(techHeritageMod) {
+            // k < 1 represents infant mortality (high initial failure rate decreasing over time)
+            const k = 0.6; 
+            // Lambda (scale) is adjusted by the tech heritage. Novel tech has much worse scale.
+            const lambda = 400 * (1 / techHeritageMod); 
+            // Survival at t=1 year
+            const survivalT1 = Math.exp(-Math.pow((1 / lambda), k));
+            const hazardRate = (1 - survivalT1); // Convert to a burn rate percentage
+            
+            return {
+                val: hazardRate,
+                trace: `h(t=1) = 1 - exp(-(1/${Math.round(lambda)})^0.6)`
+            };
+        }
+
+
+        // --- UI AND DOM LOGIC ---
+
+        function fetchIntelligence() {
+            const query = encodeURIComponent(`${selectedLV.name} rocket launch news`);
+            window.open(`https://news.google.com/search?q=${query}`, '_blank');
+        }
+
         function initDOM() {
             const lvContainer = document.getElementById('lv-container');
             const otvContainer = document.getElementById('otv-container');
 
-            // Build Launch Vehicles
             launchTiers.forEach((tier) => {
                 const header = document.createElement('div');
                 header.className = `mt-6 mb-3 first:mt-0 border-l-4 ${tier.border} pl-3`;
@@ -344,7 +306,7 @@
                 lvContainer.appendChild(header);
 
                 const grid = document.createElement('div');
-                grid.className = "grid grid-cols-2 md:grid-cols-3 gap-3";
+                grid.className = "grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3";
                 
                 tier.vehicles.forEach((lv) => {
                     const div = document.createElement('div');
@@ -353,12 +315,15 @@
                     div.onclick = () => { selectedLV = lv; selectedTierInfo = tier; updateUI(); calculatePremium(); };
                     
                     div.innerHTML = `
-                        <div class="rocket-placeholder text-xl opacity-90 transition-all duration-300 group-hover:scale-105" style="background-color: ${tier.hex};">
-                            ${lv.flag} ${lv.name}
+                        <div class="rocket-placeholder text-lg opacity-90 transition-all duration-300 group-hover:scale-105" style="background-color: ${tier.hex};">
+                            ${lv.name}
                         </div>
-                        <div class="p-2 border-t border-[#3f3f46] flex justify-between items-center bg-[#121212]">
-                            <span class="font-mono text-[10px] text-anthropicGray tracking-wider">HERITAGE</span>
-                            <span class="font-mono text-[11px] font-bold ${tier.text}">${(lv.rel * 100).toFixed(1)}%</span>
+                        <div class="p-2 border-t border-[#3f3f46] flex flex-col justify-between bg-[#121212] h-16">
+                            <span class="font-mono text-[10px] text-anthropicGray truncate">${lv.flag} Origin: ${lv.country}</span>
+                            <div class="flex justify-between items-center mt-1">
+                                <span class="font-mono text-[10px] text-anthropicGray tracking-wider">FLIGHTS</span>
+                                <span class="font-mono text-[11px] font-bold text-white">${lv.S}/${lv.N}</span>
+                            </div>
                         </div>
                     `;
                     grid.appendChild(div);
@@ -366,7 +331,6 @@
                 lvContainer.appendChild(grid);
             });
 
-            // Build OTVs
             orbitalTugs.forEach(otv => {
                 const div = document.createElement('div');
                 div.id = `otv-${otv.id}`;
@@ -375,7 +339,7 @@
                 
                 div.innerHTML = `
                     <p class="font-semibold text-xs text-white truncate">${otv.name}</p>
-                    <p class="font-mono text-[10px] text-anthropicGray">${otv.id === 'none' ? 'BASE (Direct)' : 'Rel: ' + (otv.rel * 100).toFixed(1) + '%'}</p>
+                    <p class="font-mono text-[10px] text-anthropicGray">Flights: ${otv.S}/${otv.N}</p>
                 `;
                 otvContainer.appendChild(div);
             });
@@ -389,6 +353,8 @@
                 });
             });
 
+            document.getElementById('ui-active-rocket').innerText = selectedLV.name;
+
             const badge = document.getElementById('risk-badge');
             badge.className = `text-[10px] uppercase tracking-wider font-mono px-2 py-1 rounded border ${selectedTierInfo.border} ${selectedTierInfo.bg} ${selectedTierInfo.text}`;
             badge.innerText = selectedTierInfo.name.split(':')[0]; 
@@ -400,6 +366,7 @@
         }
 
         function calculatePremium() {
+            // Base Inputs
             const tiv = parseFloat(document.getElementById('insuredValue').value) || 0;
             const orbitMod = parseFloat(document.querySelector('input[name="orbit"]:checked').value);
             const heritageMod = parseFloat(document.querySelector('input[name="heritage"]:checked').value);
@@ -408,20 +375,40 @@
             const isConstellation = document.getElementById('chk-constellation').checked;
             const isReused = document.getElementById('chk-reused').checked;
 
-            const systemPoS = selectedLV.rel * selectedOTV.rel;
-            const baseBurnRate = (1 - systemPoS) * 100; 
+            // --- 1. Bayesian Launch Reliability ---
+            const bayesLV = calculateBayesianReliability(selectedLV.S, selectedLV.N, isReused);
+            const bayesOTV = calculateBayesianReliability(selectedOTV.S, selectedOTV.N, false);
+            document.getElementById('trace-bayes').innerText = `Bayes Prior (α=8, β=2): ${bayesLV.trace}`;
 
-            let technicalRate = baseBurnRate * orbitMod * heritageMod;
-            if (isReused) technicalRate *= 1.02; 
-            if (technicalRate < 0.75) technicalRate = 0.75; 
+            // --- 2. Copula System Probability ---
+            const copulaSystem = calculateCopulaJointSurvival(bayesLV.val, bayesOTV.val);
+            document.getElementById('trace-copula').innerText = `Copula Dep (θ=2.5): ${(copulaSystem.val * 100).toFixed(2)}% Sur`;
+            
+            // Base Launch Burn Rate
+            let technicalRate = (1 - copulaSystem.val) * 100; 
 
-            let commercialRate = technicalRate * 1.15; 
-            if (includeInOrbit) commercialRate += 1.5; 
+            // --- 3. Environmental Modifiers ---
+            technicalRate = technicalRate * orbitMod;
+            if (technicalRate < 0.75) technicalRate = 0.75; // Hard underwriting floor
+
+            // --- 4. Weibull In-Orbit Addition ---
+            let commercialRate = technicalRate * 1.15; // Standard MGA/Broker load
+            
+            if (includeInOrbit) {
+                const weibull = calculateWeibullHazard(heritageMod);
+                document.getElementById('trace-weibull').innerText = `Weibull Hazard (k=0.6): ${weibull.trace}`;
+                commercialRate += (weibull.val * 100); // Add the actuarial mortality curve
+            } else {
+                document.getElementById('trace-weibull').innerText = `Weibull Hazard: Disabled`;
+            }
+
+            // --- 5. Final Policy Discounts ---
             if (isConstellation) commercialRate *= 0.85; 
 
             const totalPremium = tiv * (commercialRate / 100);
 
-            document.getElementById('out-pos').innerText = (systemPoS * 100).toFixed(2) + '%';
+            // Print to UI
+            document.getElementById('out-pos').innerText = (copulaSystem.val * 100).toFixed(2) + '%';
             document.getElementById('out-tech-rate').innerText = technicalRate.toFixed(2) + '%';
             document.getElementById('out-final-rate').innerText = commercialRate.toFixed(2) + '%';
             
@@ -432,11 +419,13 @@
             }
         }
 
+        // Listeners
         document.querySelectorAll('input').forEach(el => {
             el.addEventListener('change', calculatePremium);
             el.addEventListener('input', calculatePremium);
         });
 
+        // Init
         initDOM();
         updateUI();
         calculatePremium();
