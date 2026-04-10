@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEGIS Space Insurance Estimator | Premium Quantitative Edition v5.0</title>
+    <title>AEGIS Space Insurance Estimator | Premium Quantitative Edition v6.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -14,7 +14,8 @@
                         anthropicDark: '#121212',
                         anthropicGray: '#a1a1aa',
                         premiumBlue: '#38bdf8', 
-                        premiumGreen: '#4ade80'
+                        premiumGreen: '#4ade80',
+                        premiumRed: '#f87171'
                     },
                     fontFamily: {
                         sans: ['Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
@@ -49,8 +50,31 @@
             color: #ffffff;
         }
         
-        /* Math Trace Styling */
         .math-trace { font-size: 0.65rem; color: #71717a; border-left: 2px solid #3f3f46; padding-left: 0.5rem; margin-top: 0.25rem; }
+        
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #38bdf8;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #3f3f46;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -61,7 +85,7 @@
                 <h1 class="text-3xl font-bold tracking-tight text-white">AEGIS Quantitative Underwriting Engine</h1>
                 <p class="text-anthropicGray mt-1.5 text-sm md:text-base">Bayesian Risk Modeling & Algorithmic Policy Structuring</p>
             </div>
-            <div class="text-xs px-3 py-1 bg-premiumBlue/10 border border-premiumBlue/30 text-premiumBlue rounded font-mono hidden md:block">QUANT_BUILD_v5</div>
+            <div class="text-xs px-3 py-1 bg-premiumBlue/10 border border-premiumBlue/30 text-premiumBlue rounded font-mono hidden md:block">QUANT_BUILD_v6</div>
         </header>
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
@@ -84,12 +108,25 @@
                         </div>
                     </div>
 
-                    <div class="mb-6">
+                    <div class="mb-6 border-t border-[#27272a] pt-5">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-xs font-medium text-anthropicGray uppercase tracking-wider">Brokerage & MGA Margin</label>
+                            <span id="margin-display" class="font-mono text-premiumBlue font-bold text-sm">15%</span>
+                        </div>
+                        <input type="range" id="marginSlider" min="5" max="30" value="15" step="1" class="w-full mb-1">
+                        <div class="flex justify-between text-[10px] text-anthropicGray font-mono">
+                            <span>Direct (5%)</span>
+                            <span>Standard (15%)</span>
+                            <span>Heavy Load (30%)</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6 border-t border-[#27272a] pt-5">
                         <label class="block text-xs font-medium text-anthropicGray mb-2 uppercase tracking-wider">Bus Tech Heritage (Weibull λ Shift)</label>
                         <div class="grid grid-cols-1 gap-2">
                             <label class="cursor-pointer relative"><input type="radio" name="heritage" value="0.85" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center"><div class="flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div><span class="text-sm text-white font-medium">Flight Proven (>5 identical units)</span></div><span class="text-xs text-premiumGreen font-mono bg-premiumGreen/10 px-2 py-0.5 rounded">-15%</span></div></label>
                             <label class="cursor-pointer relative"><input type="radio" name="heritage" value="1.0" class="param-radio hidden" checked><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center"><div class="flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div><span class="text-sm text-white font-medium">Standard Heritage (1-4 units)</span></div><span class="text-xs text-anthropicGray font-mono">BASE</span></div></label>
-                            <label class="cursor-pointer relative"><input type="radio" name="heritage" value="1.4" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center"><div class="flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div><span class="text-sm text-white font-medium">Novel Technology (First Flight)</span></div><span class="text-xs text-red-400 font-mono bg-red-400/10 px-2 py-0.5 rounded">+40%</span></div></label>
+                            <label class="cursor-pointer relative"><input type="radio" name="heritage" value="1.4" class="param-radio hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex justify-between items-center"><div class="flex items-center gap-3"><div class="radio-indicator w-3 h-3 rounded-full border border-anthropicGray shrink-0"></div><span class="text-sm text-white font-medium">Novel Technology (First Flight)</span></div><span class="text-xs text-premiumRed font-mono bg-red-400/10 px-2 py-0.5 rounded">+40%</span></div></label>
                         </div>
                     </div>
 
@@ -98,7 +135,6 @@
                         <div class="grid grid-cols-1 gap-2">
                             <label class="cursor-pointer relative"><input type="checkbox" id="chk-inorbit" class="param-checkbox hidden" checked><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3"><div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div><div><span class="text-sm text-white font-medium block">First Year In-Orbit Life</span><span class="text-xs text-anthropicGray block mt-0.5">Calculated via Weibull Hazard Distribution</span></div></div></label>
                             <label class="cursor-pointer relative"><input type="checkbox" id="chk-constellation" class="param-checkbox hidden"><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3"><div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div><div><span class="text-sm text-white font-medium block">Constellation Block Policy</span><span class="text-xs text-anthropicGray block mt-0.5">Bulk discount for >5 units (-15%)</span></div></div></label>
-                            <label class="cursor-pointer relative"><input type="checkbox" id="chk-reused" class="param-checkbox hidden" checked><div class="border border-[#3f3f46] bg-[#18181b] rounded p-3 transition-colors hover:border-[#52525b] flex items-start gap-3"><div class="check-indicator w-4 h-4 rounded-sm border border-anthropicGray shrink-0 mt-0.5"></div><div><span class="text-sm text-white font-medium block">Reused Booster Hardware</span><span class="text-xs text-anthropicGray block mt-0.5">Bayesian penalty applied to prior (+2%)</span></div></div></label>
                         </div>
                     </div>
                 </div>
@@ -111,13 +147,13 @@
                         <span class="text-xs text-anthropicGray uppercase tracking-widest font-mono">Active Target</span>
                         <p id="ui-active-rocket" class="text-white font-bold text-lg">Falcon 9</p>
                     </div>
-                    <button onclick="fetchIntelligence()" class="bg-premiumBlue/10 hover:bg-premiumBlue/20 text-premiumBlue border border-premiumBlue/30 px-4 py-2 rounded text-sm font-medium transition-colors flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-                        Fetch Market News
+                    <button onclick="fetchAnomalyData()" class="bg-premiumRed/10 hover:bg-premiumRed/20 text-premiumRed border border-premiumRed/30 px-4 py-2 rounded text-sm font-medium transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        Investigate Anomaly History
                     </button>
                 </div>
 
-                <div class="bg-[#121212] p-5 rounded-lg border border-[#27272a] flex flex-col h-[650px]">
+                <div class="bg-[#121212] p-5 rounded-lg border border-[#27272a] flex flex-col h-[700px]">
                     <div class="flex justify-between items-end mb-4 border-b border-[#27272a] pb-2 shrink-0">
                         <h2 class="text-lg font-semibold text-white tracking-tight">Launch Provider Market</h2>
                         <span id="risk-badge" class="text-[10px] uppercase tracking-wider font-mono px-2 py-1 rounded border">--</span>
@@ -140,7 +176,7 @@
                     <div class="space-y-4 font-mono text-sm mb-6 relative z-10">
                         <div class="bg-[#121212] p-2.5 rounded border border-[#27272a]">
                             <div class="flex justify-between items-center">
-                                <span class="text-anthropicGray">Hardware Expected Rel:</span>
+                                <span class="text-anthropicGray">Expected Reliability:</span>
                                 <span id="out-pos" class="text-white font-bold">--%</span>
                             </div>
                             <div class="math-trace">
@@ -179,7 +215,6 @@
     </div>
 
     <script>
-        // --- DATABASE WITH FLIGHT HISTORY FOR BAYESIAN MATH ---
         // S = Successes, N = Total Flights
         const launchTiers = [
             {
@@ -224,7 +259,7 @@
         ];
 
         const orbitalTugs = [
-            { id: 'none', name: 'No OTV', S: 100, N: 100 }, // Perfect baseline
+            { id: 'none', name: 'No OTV', S: 100, N: 100 }, 
             { id: 'photon', name: 'Photon', S: 5, N: 5 },
             { id: 'ion', name: 'ION Carrier', S: 8, N: 8 },
             { id: 'sherpa', name: 'Sherpa', S: 6, N: 7 },
@@ -235,61 +270,34 @@
         let selectedTierInfo = launchTiers[0];
         let selectedOTV = orbitalTugs[0];
 
-        // --- ADVANCED ACTUARIAL MATHEMATICS ---
-
-        // 1. Bayesian Updating for Flight Heritage
-        // We assume an industry prior of alpha=8 (successes), beta=2 (failures) -> 80% baseline for a brand new rocket.
-        function calculateBayesianReliability(S, N, isReused) {
+        // --- MATH FUNCTIONS ---
+        function calculateBayesianReliability(S, N) {
             let priorAlpha = 8;
             let priorBeta = 2;
-            
-            // If reused booster, we slightly increase the uncertainty (beta) in the prior
-            if(isReused && N > 5) {
-                priorBeta += 0.5;
-            }
-            
             const expectedRel = (priorAlpha + S) / (priorAlpha + priorBeta + N);
-            return {
-                val: expectedRel,
-                trace: `E[R] = (${priorAlpha}+${S})/(${priorAlpha}+${priorBeta}+${N})`
-            };
+            return { val: expectedRel, trace: `E[R] = (${priorAlpha}+${S})/(${priorAlpha}+${priorBeta}+${N})` };
         }
 
-        // 2. Clayton Copula for Joint Sub-system Failures
-        // Assumes LV and OTV failures are not perfectly independent. A rough ride impacts the OTV.
         function calculateCopulaJointSurvival(u, v) {
-            if (v >= 0.99) return u; // No OTV math needed
-            const theta = 2.5; // Dependency parameter
-            // Formula: (u^-θ + v^-θ - 1)^(-1/θ)
+            if (v >= 0.99) return { val: u, trace: 'N/A (Direct Deploy)' }; 
+            const theta = 2.5; 
             const joint = Math.pow(Math.pow(u, -theta) + Math.pow(v, -theta) - 1, -1 / theta);
-            return {
-                val: joint,
-                trace: `C(u,v) = (u^-2.5 + v^-2.5 - 1)^-0.4`
-            };
+            return { val: joint, trace: `C(u,v) = (u^-2.5 + v^-2.5 - 1)^-0.4` };
         }
 
-        // 3. Weibull Distribution for In-Orbit Mortality (First Year)
         function calculateWeibullHazard(techHeritageMod) {
-            // k < 1 represents infant mortality (high initial failure rate decreasing over time)
             const k = 0.6; 
-            // Lambda (scale) is adjusted by the tech heritage. Novel tech has much worse scale.
             const lambda = 400 * (1 / techHeritageMod); 
-            // Survival at t=1 year
             const survivalT1 = Math.exp(-Math.pow((1 / lambda), k));
-            const hazardRate = (1 - survivalT1); // Convert to a burn rate percentage
-            
-            return {
-                val: hazardRate,
-                trace: `h(t=1) = 1 - exp(-(1/${Math.round(lambda)})^0.6)`
-            };
+            const hazardRate = (1 - survivalT1); 
+            return { val: hazardRate, trace: `h(t=1) = 1 - exp(-(1/${Math.round(lambda)})^0.6)` };
         }
-
 
         // --- UI AND DOM LOGIC ---
-
-        function fetchIntelligence() {
-            const query = encodeURIComponent(`${selectedLV.name} rocket launch news`);
-            window.open(`https://news.google.com/search?q=${query}`, '_blank');
+        function fetchAnomalyData() {
+            // Creates a highly targeted boolean search for failures rather than generic news
+            const query = encodeURIComponent(`"${selectedLV.name}" (rocket OR launch vehicle) AND ("failure" OR "anomaly" OR "partial loss" OR "destroyed")`);
+            window.open(`https://www.google.com/search?q=${query}&tbm=nws`, '_blank');
         }
 
         function initDOM() {
@@ -343,6 +351,14 @@
                 `;
                 otvContainer.appendChild(div);
             });
+            
+            // Slider Event
+            const slider = document.getElementById('marginSlider');
+            const display = document.getElementById('margin-display');
+            slider.addEventListener('input', function() {
+                display.innerText = this.value + '%';
+                calculatePremium();
+            });
         }
 
         function updateUI() {
@@ -366,48 +382,46 @@
         }
 
         function calculatePremium() {
-            // Base Inputs
             const tiv = parseFloat(document.getElementById('insuredValue').value) || 0;
             const orbitMod = parseFloat(document.querySelector('input[name="orbit"]:checked').value);
             const heritageMod = parseFloat(document.querySelector('input[name="heritage"]:checked').value);
             
             const includeInOrbit = document.getElementById('chk-inorbit').checked;
             const isConstellation = document.getElementById('chk-constellation').checked;
-            const isReused = document.getElementById('chk-reused').checked;
+            
+            // MGA / Brokerage Margin Slider
+            const commMarginRaw = parseFloat(document.getElementById('marginSlider').value);
+            const commercialLoadMultiplier = 1 + (commMarginRaw / 100);
 
-            // --- 1. Bayesian Launch Reliability ---
-            const bayesLV = calculateBayesianReliability(selectedLV.S, selectedLV.N, isReused);
-            const bayesOTV = calculateBayesianReliability(selectedOTV.S, selectedOTV.N, false);
+            // 1. Math
+            const bayesLV = calculateBayesianReliability(selectedLV.S, selectedLV.N);
+            const bayesOTV = calculateBayesianReliability(selectedOTV.S, selectedOTV.N);
             document.getElementById('trace-bayes').innerText = `Bayes Prior (α=8, β=2): ${bayesLV.trace}`;
 
-            // --- 2. Copula System Probability ---
             const copulaSystem = calculateCopulaJointSurvival(bayesLV.val, bayesOTV.val);
             document.getElementById('trace-copula').innerText = `Copula Dep (θ=2.5): ${(copulaSystem.val * 100).toFixed(2)}% Sur`;
             
-            // Base Launch Burn Rate
             let technicalRate = (1 - copulaSystem.val) * 100; 
 
-            // --- 3. Environmental Modifiers ---
+            // 2. Modifiers
             technicalRate = technicalRate * orbitMod;
-            if (technicalRate < 0.75) technicalRate = 0.75; // Hard underwriting floor
+            if (technicalRate < 0.75) technicalRate = 0.75; 
 
-            // --- 4. Weibull In-Orbit Addition ---
-            let commercialRate = technicalRate * 1.15; // Standard MGA/Broker load
+            // 3. Commercial Margin Applied Here
+            let commercialRate = technicalRate * commercialLoadMultiplier; 
             
             if (includeInOrbit) {
                 const weibull = calculateWeibullHazard(heritageMod);
                 document.getElementById('trace-weibull').innerText = `Weibull Hazard (k=0.6): ${weibull.trace}`;
-                commercialRate += (weibull.val * 100); // Add the actuarial mortality curve
+                commercialRate += (weibull.val * 100); 
             } else {
                 document.getElementById('trace-weibull').innerText = `Weibull Hazard: Disabled`;
             }
 
-            // --- 5. Final Policy Discounts ---
             if (isConstellation) commercialRate *= 0.85; 
 
             const totalPremium = tiv * (commercialRate / 100);
 
-            // Print to UI
             document.getElementById('out-pos').innerText = (copulaSystem.val * 100).toFixed(2) + '%';
             document.getElementById('out-tech-rate').innerText = technicalRate.toFixed(2) + '%';
             document.getElementById('out-final-rate').innerText = commercialRate.toFixed(2) + '%';
@@ -419,13 +433,11 @@
             }
         }
 
-        // Listeners
-        document.querySelectorAll('input').forEach(el => {
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"], input[type="number"]').forEach(el => {
             el.addEventListener('change', calculatePremium);
             el.addEventListener('input', calculatePremium);
         });
 
-        // Init
         initDOM();
         updateUI();
         calculatePremium();
